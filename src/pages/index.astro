@@ -1,18 +1,36 @@
 ---
----
-// Esta es la página de inicio principal de tu sitio
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import fetch from 'node-fetch';
 
+const res = await fetch('https://api.sheetbest.com/sheets/d1d4bd3a-9976-4bd8-b7c7-da3453bff44a');
+const data = await res.json();
+---
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mi Página Profesional</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Mi Página Pro</title>
+    <link href="/src/styles/global.css" rel="stylesheet" />
   </head>
-  <body class="bg-white text-gray-900 font-sans">
-    <main class="p-10 text-center">
-      <h1 class="text-4xl font-bold mb-4">¡Hola mundo!</h1>
-      <p class="text-lg">Este sitio está construido con Astro + Tailwind</p>
+  <body class="bg-gray-100 text-gray-900 font-sans">
+    <Header />
+
+    <main class="max-w-5xl mx-auto p-8">
+      <h2 class="text-4xl font-bold mb-6">Explora los mejores nichos</h2>
+
+      <section id="nichos" class="grid md:grid-cols-3 gap-6">
+        {data.map((item) => (
+          <div class="bg-white p-6 shadow rounded-xl border hover:scale-105 transition">
+            <img src={`/images/${item.nombre_imagen}`} alt={item.titulo} class="rounded mb-4 w-full h-48 object-cover" />
+            <h3 class="text-xl font-bold text-blue-700">{item.nicho} - {item.subnicho}</h3>
+            <p class="mt-2 text-lg font-semibold">{item.titulo}</p>
+            <p class="text-sm text-gray-600 mb-2">{item.subtitulo}</p>
+            <p class="text-sm text-gray-800">{item.contenido}</p>
+          </div>
+        ))}
+      </section>
     </main>
+
+    <Footer />
   </body>
 </html>
