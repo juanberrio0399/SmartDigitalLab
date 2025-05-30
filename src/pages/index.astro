@@ -1,36 +1,31 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Papa from 'papaparse';
 import fetch from 'node-fetch';
 
-const res = await fetch('https://api.sheetbest.com/sheets/d1d4bd3a-9976-4bd8-b7c7-da3453bff44a');
-const data = await res.json();
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/XXXXXX/pub?output=csv'; // Reemplaza con tu link
+
+const res = await fetch(CSV_URL);
+const text = await res.text();
+
+const { data } = Papa.parse(text, { header: true });
 ---
+
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>Mi Página Pro</title>
-    <link href="/src/styles/global.css" rel="stylesheet" />
+    <title>Smart Digital Lab</title>
   </head>
-  <body class="bg-gray-100 text-gray-900 font-sans">
-    <Header />
+  <body class="p-8 font-sans bg-gray-100">
+    <h1 class="text-3xl font-bold mb-6">Contenido desde Google Sheets</h1>
 
-    <main class="max-w-5xl mx-auto p-8">
-      <h2 class="text-4xl font-bold mb-6">Explora los mejores nichos</h2>
-
-      <section id="nichos" class="grid md:grid-cols-3 gap-6">
-        {data.map((item) => (
-          <div class="bg-white p-6 shadow rounded-xl border hover:scale-105 transition">
-            <img src={`/images/${item.nombre_imagen}`} alt={item.titulo} class="rounded mb-4 w-full h-48 object-cover" />
-            <h3 class="text-xl font-bold text-blue-700">{item.nicho} - {item.subnicho}</h3>
-            <p class="mt-2 text-lg font-semibold">{item.titulo}</p>
-            <p class="text-sm text-gray-600 mb-2">{item.subtitulo}</p>
-            <p class="text-sm text-gray-800">{item.contenido}</p>
-          </div>
-        ))}
-      </section>
-    </main>
-
-    <Footer />
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {data.map((item) => (
+        <div class="bg-white p-4 rounded-lg shadow">
+          <img src={`/images/${item.imagen}`} alt={item.titulo} class="w-full h-48 object-cover rounded" />
+          <h2 class="text-xl font-semibold mt-2">{item.titulo}</h2>
+          <p class="text-sm text-gray-600 mt-1">{item.contenido}</p>
+        </div>
+      ))}
+    </div>
   </body>
 </html>
