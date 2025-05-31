@@ -1,5 +1,5 @@
 {
-  "name": "SmartDigitalLab",
+  "name": "smart-digital-lab",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
