@@ -1,14 +1,14 @@
 {
-  "name": "mi-pagina",
+  "name": "SmartDigitalLab",
   "type": "module",
   "scripts": {
-  "dev": "astro dev",
-  "build": "astro build",
-  "preview": "astro preview",
-  "prepare": "chmod +x node_modules/.bin/astro"
-},
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "prepare": "node -e \"if (process.platform !== 'win32') { require('child_process').execSync('chmod +x node_modules/.bin/astro') }\""
+  },
   "dependencies": {
-    "astro": "^4.0.0",
+    "astro": "^4.16.18",
     "autoprefixer": "^10.4.0",
     "node-fetch": "^3.3.2",
     "papaparse": "^5.5.3",
