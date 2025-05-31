@@ -1,13 +1,8 @@
 ---
-import Papa from 'papaparse';
-import fetch from 'node-fetch';
+const API_URL = 'https://api.sheetbest.com/sheets/d1d4bd3a-9976-4bd8-b7c7-da3453bff44a';
 
-const CSV_URL = 'https://api.sheetbest.com/sheets/d1d4bd3a-9976-4bd8-b7c7-da3453bff44a'; // Reemplaza con tu link
-
-const res = await fetch(CSV_URL);
-const text = await res.text();
-
-const { data } = Papa.parse(text, { header: true });
+const res = await fetch(API_URL);
+const data = await res.json();
 ---
 
 <html lang="es">
